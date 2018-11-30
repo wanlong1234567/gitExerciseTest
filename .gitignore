@@ -1,0 +1,12 @@
+*.iml
+*.idea
+*/target/*
+**/target/*
+target/*
+*/lib/*
+*.class
+.*
+lib/*
+*.log
+*.json
+debugParams.conf
