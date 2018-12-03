@@ -3,6 +3,8 @@ package com.wanlong.aop;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
+import java.util.Map;
+
 /**
  * @author wl
  * @date 2018/12/3
@@ -18,8 +20,12 @@ public class MyInterceptor implements MethodInterceptor {
          * 可以在这里做一些验证，比如能否去执行这个方法
          */
         Object ret = invocation.proceed();
+        System.out.println("ret:"+ret);
+        System.out.println("类的信息："+invocation.getMethod().getDeclaringClass());
         System.out.println("方法名:"+invocation.getMethod().getName());
         System.out.println("参数 ：" + invocation.getArguments() );
+        Map<String,Integer> map = (Map<String, Integer>) ret;
+        System.out.println("map:"+map);
         doAfter();
         return ret;
     }
