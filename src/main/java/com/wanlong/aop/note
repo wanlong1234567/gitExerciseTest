@@ -1,0 +1,18 @@
+这个是Google Guice之AOP(面向切面编程)
+文章地址：
+https://blog.csdn.net/yanquan345/article/details/19760027
+
+下面简单理解一下：
+其实就是说：
+你写好一个函数后，你可以在不更改原来的代码情况，在这个函数前或者函数后动态的加入新的代码。
+比如你原来的代码：
+void foo(){
+  System.out.println("in foo()");
+}
+然后你想在函数执行前（当成也可以加到执行后，或前后都加，原理是一样）加一句：
+System.out.println("before execute foo()");
+你也可以多加几句，通过Spring，你可以把这些代码动态的加到函数前面，而不用改变原来的代码。从而会得到与以下等效的执行码：
+void foo() {
+    System.out.println("before execute foo()");
+    System.out.pringln("in foo()");
+}
