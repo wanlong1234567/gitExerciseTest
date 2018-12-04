@@ -1,5 +1,7 @@
 package com.wanlong.aop2;
 
+import com.wanlong.aop.MyInterceptor;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,15 +17,17 @@ public class ProxyFactory implements InvocationHandler {
 
     /**
      * 创建目标对象的实体类
+     *
      * @param stu 目标对象
      * @return 目标对象实体类
      */
-    public Object createStudentProxy(Object stu){
-        this.stu=stu;
+    public Object createStudentProxy(Object stu) {
+        this.stu = stu;
         //返回目标对象实体类，第一个参数目标对象的类加载器，第二个参数是目标对象的接口对象，
         // 第三个参数是InvocationHandler默认对象。此方法会回调invoke方法
-        return Proxy.newProxyInstance(stu.getClass().getClassLoader(),stu.getClass().getInterfaces(),this);
-
+        return Proxy.newProxyInstance(MyInterceptor.class.getClassLoader(), new Class<?>[]{StudentInterface.class}, new ProxyFactory());
+        //  return Proxy.newProxyInstance(stu.getClass().getClassLoader(),stu.getClass().getInterfaces(),this);
+        //这2个都是可以的
     }
 
     /**
@@ -33,11 +37,11 @@ public class ProxyFactory implements InvocationHandler {
      * 表明代理类已经起作用了。
      */
     public Object invoke(Object proxy, Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
-        StudentBean s= (StudentBean) stu;
-        Object object=null;
-        if (s.getName()!=null){
-            object=method.invoke(stu,args);
-        }else {
+        StudentBean s = (StudentBean) stu;
+        Object object = null;
+        if (s.getName() != null) {
+            object = method.invoke(stu, args);
+        } else {
             System.out.println("名称为空，代理类已经拦截");
         }
         return object;
